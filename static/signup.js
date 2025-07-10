@@ -25,7 +25,8 @@ const handleSubmit = async (e) => {
         const data = await res.json();
 
         if(data === "200"){
-            alert("회원가입에 성공했습니다.")
+            alert("회원가입에 성공했습니다.");
+            window.location.pathname = "/login.html";
         }
     } else {
         alert("비밀번호가 일치하지 않습니다.");
