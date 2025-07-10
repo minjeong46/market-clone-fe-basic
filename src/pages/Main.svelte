@@ -1,17 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
-        <link rel="stylesheet" href="./css/style.css">
-        <title>당근마켓 클론코딩</title>
-    </head>
-    <body>
-        <div class="media-info-msg">화면 사이즈를 줄여주세요.</div>
+        <script>
+            let hour = new Date().getHours();
+            let min = new Date().getMinutes();
+
+        </script>
+        <!-- <div class="media-info-msg">화면 사이즈를 줄여주세요.</div> -->
         <header>
             <div class="info-bar">
-                <div class="info-bar__time">20:55</div>
+                <div class="info-bar__time">{hour}:{min}</div>
                 <div class="info-bar__icons">
                     <img src="assets/chart-bar.svg" alt="chart-bar">
                     <img src="assets/wifi.svg" alt="wifi">
@@ -31,7 +26,7 @@
             </div>
         </header>
         <main>
-            <a class="write-btn" href="write.html">+ 글쓰기</a>
+            <a class="write-btn" href="#/write">+ 글쓰기</a>
         </main>
         <footer>
             <div class="footer-block">
@@ -58,6 +53,3 @@
 
             </div>
         </footer>
-        <script src="./index.js"></script>
-    </body>
-</html>
