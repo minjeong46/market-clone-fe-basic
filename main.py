@@ -93,7 +93,7 @@ def query_user(data):
     return user
 
 @app.post("/login")
-def login(id:Annotated[str,Form()], password:Annotated[str,Form()]):
+def login(response:Response, id:Annotated[str,Form()], password:Annotated[str,Form()]):
     user = query_user(id)
     if not user:
         raise InvalidCredentialsException # raise 에러메세지, InvalidCredentialsException 401를 자동으로 생성해서 내려줌
@@ -103,6 +103,13 @@ def login(id:Annotated[str,Form()], password:Annotated[str,Form()]):
     access_token = manager.create_access_token(data={
         'sub': user['id'],
     })
+    response.set_cookie(
+        key="access_token",
+        value=access_token,
+        httponly=True,
+        max_age=60*60,
+        path="/"
+    )
     
     return {'access_token': access_token}
     
@@ -119,6 +126,10 @@ def signup(id:Annotated[str,Form()], password:Annotated[str,Form()], name:Annota
     con.commit()
     # print(id, password)
     return '200'
+
+@manager.user_loader
+def load_token(request):
+    return request.cookies.get("access_token")
 
 
 app.mount("/", StaticFiles(directory="static", html=True), name="static")
