@@ -1,6 +1,25 @@
         <script>
+    import { onMount } from "svelte";
+            import Footer from "../components/Footer.svelte";
+                        import { getDatabase, ref, onValue } from "firebase/database";
+
             let hour = new Date().getHours();
             let min = new Date().getMinutes();
+
+            // 반응현 변수
+            $: item = [];
+
+const db = getDatabase();
+const itemRef = ref(db, 'item/');
+
+
+onMount(()=>{ // 화면이 렌더링 됐을 때 마다 유지하도록 
+    onValue(itemRef, (snapshot) => { // itemRef 가 바뀔때마다 snapshot 을 새롭게 내려줌
+  const data = snapshot.val();
+  item = Object.values(data);
+  console.log(Object.values(data)); // data 가 Object 니깐 Object 의 value 값을 가져옴
+});
+})
 
         </script>
         <!-- <div class="media-info-msg">화면 사이즈를 줄여주세요.</div> -->
@@ -26,30 +45,18 @@
             </div>
         </header>
         <main>
+            {#each item as item}
+            <div class="item-list">
+                <div class="item-list__img"></div>
+                <div class="item-list__info">
+                    <div class="item-list__info-title">{item.title}</div>
+                    <div class="item-list__info-meta">{item.price}</div>
+                    <div class="item-list__info-price">{item.place}</div>
+                     <div class="">{item.description}</div>
+                </div>
+            </div>
+
+            {/each}
             <a class="write-btn" href="#/write">+ 글쓰기</a>
         </main>
-        <footer>
-            <div class="footer-block">
-                <div class="footer-icons">
-                    <div class="footer-icons__img"><img src="assets/home.svg" alt="home"></div>
-                    <div class="footer-icons__desc">홈</div>
-                </div>
-                <div class="footer-icons">
-                    <div class="footer-icons__img"><img src="assets/docu.svg" alt="document"></div>
-                    <div class="footer-icons__desc">동네 생활</div>
-                </div>
-                <div class="footer-icons">
-                    <div class="footer-icons__img"><img src="assets/location.svg" alt="location"></div>
-                    <div class="footer-icons__desc">내 근처</div>
-                </div>
-                <div class="footer-icons">
-                    <div class="footer-icons__img"><img src="assets/chat.svg" alt="chat"></div>
-                    <a class="footer-icons__desc" href="chat.html">채팅</a>
-                </div>
-                <div class="footer-icons">
-                    <div class="footer-icons__img"><img src="assets/user.svg" alt="user"></div>
-                    <div class="footer-icons__desc">나의 당근</div>
-                </div>
-
-            </div>
-        </footer>
+        <Footer location='home' />
