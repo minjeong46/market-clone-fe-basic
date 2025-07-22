@@ -70,7 +70,7 @@
                     {item.place}
                     {calcTime(item.insertAt)}
                 </div>
-                <div class="item-list__info-price">{item.price}</div>
+                <div class="item-list__info-price">{item.price.toLocaleString()}</div>
                 <div class="item-list__info-description">
                     {item.description}
                 </div>
